@@ -1,5 +1,14 @@
-import { tweetsData } from "./data.js";
+import { tweetsData as data } from "./data.js";
 import { v4 as uuidv4 } from "https://jspm.dev/uuid";
+
+let tweetsData = data;
+const tweetsFromLocalStorage = JSON.parse(
+  localStorage.getItem("twitter-clone-tweets")
+);
+
+if (tweetsFromLocalStorage) {
+  tweetsData = tweetsFromLocalStorage;
+}
 
 document.addEventListener("click", function (e) {
   if (e.target.dataset.like) {
@@ -89,6 +98,8 @@ function handleTweetBtnClick() {
 
 function getFeedHtml() {
   let feedHtml = ``;
+
+  localStorage.setItem("twitter-clone-tweets", JSON.stringify(tweetsData));
 
   tweetsData.forEach(function (tweet) {
     let likeIconClass = "";
