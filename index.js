@@ -8,6 +8,8 @@ document.addEventListener("click", function (e) {
     handleRetweetClick(e.target.dataset.retweet);
   } else if (e.target.dataset.reply) {
     handleReplyClick(e.target.dataset.reply);
+  } else if (e.target.dataset.feedback) {
+    handleFeedbackClick(e.target.dataset.feedback);
   } else if (e.target.id === "tweet-btn") {
     handleTweetBtnClick();
   }
@@ -43,6 +45,26 @@ function handleRetweetClick(tweetId) {
 
 function handleReplyClick(replyId) {
   document.getElementById(`replies-${replyId}`).classList.toggle("hidden");
+}
+
+function handleFeedbackClick(feedbackId) {
+  let feedbackInputValue = document.querySelector(
+    `#feedback-${feedbackId}`
+  ).value;
+  if (feedbackInputValue) {
+    const targetTweetObj = tweetsData.filter(
+      (tweet) => tweet.uuid === feedbackId
+    )[0];
+
+    targetTweetObj.replies.unshift({
+      handle: `@Scrimba`,
+      profilePic: `images/scrimbalogo.png`,
+      tweetText: feedbackInputValue,
+    });
+    console.log(targetTweetObj.replies[0]);
+    render();
+    feedbackInputValue = "";
+  }
 }
 
 function handleTweetBtnClick() {
@@ -119,6 +141,7 @@ function getFeedHtml() {
                     ></i>
                     ${tweet.likes}
                 </span>
+              
                 <span class="tweet-detail">
                     <i class="fa-solid fa-retweet ${retweetIconClass}"
                     data-retweet="${tweet.uuid}"
@@ -127,6 +150,13 @@ function getFeedHtml() {
                 </span>
             </div>   
         </div>            
+    </div>
+    <div class="tweet-feedback">
+      <img class="user-avatar" src="./images/scrimbalogo.png" alt="User's avatar" />
+      <div class="feedback-input-div">
+        <input class="feedback-input" id="feedback-${tweet.uuid}" type="text" placeholder="Write a reply..."/>
+        <i class="fa-solid fa-paper-plane reply" data-feedback="${tweet.uuid}"></i>
+      </div>
     </div>
     <div class="hidden" id="replies-${tweet.uuid}">
         ${repliesHtml}
