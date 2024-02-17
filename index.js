@@ -69,7 +69,7 @@ function handleFeedbackClick(feedbackId) {
 
     targetTweetObj.replies.unshift({
       handle: `@Scrimba`,
-      profilePic: `images/scrimbalogo.png`,
+      profilePic: `images/mark.png`,
       tweetText: feedbackInputValue,
     });
     render();
@@ -83,7 +83,7 @@ function handleTweetBtnClick() {
   if (tweetInput.value) {
     tweetsData.unshift({
       handle: `@Scrimba`,
-      profilePic: `images/scrimbalogo.png`,
+      profilePic: `images/mark.png`,
       likes: 0,
       retweets: 0,
       tweetText: tweetInput.value,
@@ -174,7 +174,7 @@ function getFeedHtml() {
         </div>            
     </div>
     <div class="tweet-feedback">
-      <img class="user-avatar" src="./images/scrimbalogo.png" alt="User's avatar" />
+      <img class="user-avatar" src="./images/mark.png" alt="User's avatar" />
       <div class="feedback-input-div">
         <input class="feedback-input" id="feedback-${tweet.uuid}" type="text" placeholder="Write a reply..."/>
         <i class="fa-solid fa-paper-plane reply" data-feedback="${tweet.uuid}"></i>
