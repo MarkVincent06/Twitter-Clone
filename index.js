@@ -21,6 +21,8 @@ document.addEventListener("click", function (e) {
     handleFeedbackClick(e.target.dataset.feedback);
   } else if (e.target.id === "tweet-btn") {
     handleTweetBtnClick();
+  } else if (e.target.dataset.delete) {
+    handleDeleteTweetBtnClick(e.target.dataset.delete);
   }
 });
 
@@ -70,7 +72,6 @@ function handleFeedbackClick(feedbackId) {
       profilePic: `images/scrimbalogo.png`,
       tweetText: feedbackInputValue,
     });
-    console.log(targetTweetObj.replies[0]);
     render();
     feedbackInputValue = "";
   }
@@ -94,6 +95,15 @@ function handleTweetBtnClick() {
     render();
     tweetInput.value = "";
   }
+}
+
+function handleDeleteTweetBtnClick(deleteId) {
+  const targetTweetObjIndex = tweetsData.findIndex(
+    (tweet) => tweet.uuid === deleteId
+  );
+
+  tweetsData.splice(targetTweetObjIndex, 1);
+  render();
 }
 
 function getFeedHtml() {
@@ -134,6 +144,7 @@ function getFeedHtml() {
 
     feedHtml += `
 <div class="tweet">
+    <i class="fa-solid fa-trash trash" data-delete="${tweet.uuid}"></i>
     <div class="tweet-inner">
         <img src="${tweet.profilePic}" class="profile-pic">
         <div>
